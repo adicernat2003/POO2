@@ -20,9 +20,13 @@ public class Student {
     public static final String UNIVERSITY = "Universitatea din Bucuresti";
 
     private final int studentId;      // constanta per obiect
+
     private String name;              // atribut privat
+
     protected int yearOfStudy;        // accesibil in subclase
+
     String groupCode;                 // default/package-private
+
     private double[] grades;          // array de note
 
     // bloc de initializare: ruleaza inaintea constructorului

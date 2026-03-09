@@ -2,9 +2,11 @@ package lab.model;
 
 /**
  * Demonstreaza array multidimensional si initializarea atributelor.
+ * Ordinea: Static variables, Static blocks, Instance variables (default → explicit initialization), Instance initialization blocks, Constructor
  */
 public class Laboratory {
     private String room;
+
     private int[][] seatingMatrix;
 
     // bloc de initializare

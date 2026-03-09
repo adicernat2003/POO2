@@ -7,11 +7,15 @@ import java.util.Arrays;
  */
 public class Course {
     public static final int MAX_STUDENTS = 30; // constanta de clasa
+
     private static int totalCourses = 0;       // memorie de clasa
 
     private final String code;
+
     private String title;
+
     private Student[] enrolledStudents;
+
     private int enrolledCount;
 
     public Course(String code, String title) {
