@@ -26,7 +26,7 @@ public class Main {
         System.out.println("multiply(double, int): " + Calculator.multiply(2.5, 4));
 
         System.out.println("\n=== 3. MOSTENIRE + CLASE ABSTRACTE ===");
-        Phone phone = new Phone("Samsung", "Galaxy S24", -1, 88);
+        Phone phone = new Phone("Samsung", "Galaxy S24", 15, 88);
         Laptop laptop = new Laptop("Lenovo", "ThinkPad E14", 3500, 16);
         SmartWatch watch = new SmartWatch("Huawei", "Watch GT", 900, true);
 
