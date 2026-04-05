@@ -1,0 +1,5 @@
+Java IO Streams
+BufferedReader este eficient
+FileReader citeste caracter cu caracter
+NIO.2 este mai modern
+Try-with-resources inchide automat resursele
