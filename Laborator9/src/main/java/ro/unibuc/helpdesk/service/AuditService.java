@@ -1,15 +1,16 @@
 package ro.unibuc.helpdesk.service;
 
-import ro.unibuc.helpdesk.config.AppLogger;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.logging.Logger;
 
+import ro.unibuc.helpdesk.config.AppLogger;
+
 public final class AuditService {
 
     private static final Logger logger = AppLogger.getLogger(AuditService.class);
+
     private static final AuditService instance = new AuditService();
 
     private AuditService() {

@@ -1,14 +1,14 @@
 package ro.unibuc.helpdesk.repository;
 
-import ro.unibuc.helpdesk.config.DatabaseConnection;
-import ro.unibuc.helpdesk.model.Customer;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import ro.unibuc.helpdesk.config.DatabaseConnection;
+import ro.unibuc.helpdesk.model.Customer;
 
 public class CustomerRepository {
 
@@ -48,6 +48,30 @@ public class CustomerRepository {
         }
 
         return customers;
+    }
+
+    public Customer findById(int id) {
+        String sql = "SELECT * FROM customers WHERE id = ?";
+
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return new Customer(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("email")
+                );
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return null;
     }
 
     public void delete(int id) {

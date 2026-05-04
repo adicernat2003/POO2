@@ -1,18 +1,27 @@
 package ro.unibuc.helpdesk.service;
 
+import java.util.List;
+
+import ro.unibuc.helpdesk.exception.DeleteNotAllowedException;
+import ro.unibuc.helpdesk.exception.EntityNotFoundException;
 import ro.unibuc.helpdesk.exception.ValidationException;
 import ro.unibuc.helpdesk.model.Customer;
 import ro.unibuc.helpdesk.repository.CustomerRepository;
-
-import java.util.List;
+import ro.unibuc.helpdesk.repository.TicketRepository;
 
 public class CustomerService {
 
     private final CustomerRepository repository;
+
+    private final TicketRepository ticketRepository;
+
     private final AuditService audit;
 
-    public CustomerService(CustomerRepository repository, AuditService audit) {
+    public CustomerService(CustomerRepository repository,
+                           TicketRepository ticketRepository,
+                           AuditService audit) {
         this.repository = repository;
+        this.ticketRepository = ticketRepository;
         this.audit = audit;
     }
 
@@ -41,6 +50,16 @@ public class CustomerService {
     public void deleteCustomer(int id) {
         if (id <= 0) {
             throw new ValidationException("Customer id is invalid.");
+        }
+
+        if (repository.findById(id) == null) {
+            throw new EntityNotFoundException(String.format("Customer with id %s not found.", id));
+        }
+
+        if (ticketRepository.existsByCustomerId(id)) {
+            throw new DeleteNotAllowedException(
+                    "Customer cannot be deleted because it has tickets."
+            );
         }
 
         repository.delete(id);

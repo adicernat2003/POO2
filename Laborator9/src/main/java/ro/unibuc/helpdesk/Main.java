@@ -1,5 +1,7 @@
 package ro.unibuc.helpdesk;
 
+import java.util.Scanner;
+
 import ro.unibuc.helpdesk.config.DatabaseInitializer;
 import ro.unibuc.helpdesk.model.Agent;
 import ro.unibuc.helpdesk.model.Category;
@@ -20,25 +22,34 @@ import ro.unibuc.helpdesk.service.CommentService;
 import ro.unibuc.helpdesk.service.CustomerService;
 import ro.unibuc.helpdesk.service.TicketService;
 
-import java.util.Scanner;
-
 public class Main {
 
     private final Scanner scanner = new Scanner(System.in);
 
     private final CustomerService customerService;
+
     private final AgentService agentService;
+
     private final CategoryService categoryService;
+
     private final TicketService ticketService;
+
     private final CommentService commentService;
 
     public Main() {
         AuditService auditService = AuditService.getInstance();
-        this.customerService = new CustomerService(new CustomerRepository(), auditService);
-        this.agentService = new AgentService(new AgentRepository(), auditService);
-        this.categoryService = new CategoryService(new CategoryRepository(), auditService);
-        this.ticketService = new TicketService(new TicketRepository(), auditService);
-        this.commentService = new CommentService(new CommentRepository(), auditService);
+
+        CustomerRepository customerRepository = new CustomerRepository();
+        AgentRepository agentRepository = new AgentRepository();
+        CategoryRepository categoryRepository = new CategoryRepository();
+        TicketRepository ticketRepository = new TicketRepository();
+        CommentRepository commentRepository = new CommentRepository();
+
+        this.customerService = new CustomerService(customerRepository, ticketRepository, auditService);
+        this.agentService = new AgentService(agentRepository, auditService);
+        this.categoryService = new CategoryService(categoryRepository, auditService);
+        this.ticketService = new TicketService(ticketRepository, customerRepository, categoryRepository, agentRepository, auditService);
+        this.commentService = new CommentService(commentRepository, ticketRepository, auditService);
     }
 
     public static void main(String[] args) {
@@ -69,6 +80,8 @@ public class Main {
                     case 11 -> addCommentToTicket();
                     case 12 -> listCommentsForTicket();
                     case 13 -> deleteCustomer();
+                    case 14 -> deleteTicket();
+                    case 15 -> deleteAgent();
                     case 0 -> {
                         System.out.println("Goodbye!");
                         return;
@@ -99,6 +112,8 @@ public class Main {
                 11. Add comment to ticket
                 12. List comments for ticket
                 13. Delete customer by id
+                14. Delete ticket by id
+                15. Delete agent by id
                 0. Exit
                 """);
     }
@@ -168,9 +183,9 @@ public class Main {
         int ticketId = readInt("Ticket id: ");
 
         System.out.println("Status options: OPEN, IN_PROGRESS, CLOSED");
-        TicketStatus status = TicketStatus.valueOf(readString("New status: ").toUpperCase());
+        TicketStatus newStatus = TicketStatus.valueOf(readString("New status: ").toUpperCase());
 
-        ticketService.updateStatus(ticketId, status);
+        ticketService.updateStatus(ticketId, newStatus);
         System.out.println("Ticket status updated.");
     }
 
@@ -203,6 +218,20 @@ public class Main {
 
         customerService.deleteCustomer(id);
         System.out.println("Customer deleted.");
+    }
+
+    private void deleteTicket() {
+        int id = readInt("Ticket id to delete: ");
+
+        ticketService.deleteTicket(id);
+        System.out.println("Ticket deleted.");
+    }
+
+    private void deleteAgent() {
+        int id = readInt("Agent id to delete: ");
+
+        agentService.deleteAgent(id);
+        System.out.println("Agent deleted.");
     }
 
     private String readString(String message) {

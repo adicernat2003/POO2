@@ -1,13 +1,14 @@
 package ro.unibuc.helpdesk.service;
 
+import java.util.List;
+
 import ro.unibuc.helpdesk.model.Category;
 import ro.unibuc.helpdesk.repository.CategoryRepository;
-
-import java.util.List;
 
 public class CategoryService {
 
     private final CategoryRepository repository;
+
     private final AuditService audit;
 
     public CategoryService(CategoryRepository repository, AuditService audit) {

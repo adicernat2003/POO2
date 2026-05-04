@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS tickets
     agent_id    INT,
     category_id INT          NOT NULL,
     FOREIGN KEY (customer_id) REFERENCES customers (id),
-    FOREIGN KEY (agent_id) REFERENCES agents (id),
+    FOREIGN KEY (agent_id) REFERENCES agents (id) ON DELETE SET NULL,
     FOREIGN KEY (category_id) REFERENCES categories (id)
 );
 
@@ -38,5 +38,5 @@ CREATE TABLE IF NOT EXISTS comments
     id        INT PRIMARY KEY AUTO_INCREMENT,
     ticket_id INT  NOT NULL,
     message   TEXT NOT NULL,
-    FOREIGN KEY (ticket_id) REFERENCES tickets (id)
+    FOREIGN KEY (ticket_id) REFERENCES tickets (id) ON DELETE CASCADE
 );

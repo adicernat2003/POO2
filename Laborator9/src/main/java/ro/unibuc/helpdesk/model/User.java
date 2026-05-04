@@ -2,7 +2,9 @@ package ro.unibuc.helpdesk.model;
 
 public class User {
     protected int id;
+
     protected String name;
+
     protected String email;
 
     public User(int id, String name, String email) {

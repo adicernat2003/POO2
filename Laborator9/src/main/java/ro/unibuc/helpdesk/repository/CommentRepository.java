@@ -1,14 +1,14 @@
 package ro.unibuc.helpdesk.repository;
 
-import ro.unibuc.helpdesk.config.DatabaseConnection;
-import ro.unibuc.helpdesk.model.Comment;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import ro.unibuc.helpdesk.config.DatabaseConnection;
+import ro.unibuc.helpdesk.model.Comment;
 
 public class CommentRepository {
 

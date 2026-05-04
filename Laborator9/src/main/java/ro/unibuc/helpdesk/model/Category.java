@@ -2,6 +2,7 @@ package ro.unibuc.helpdesk.model;
 
 public class Category implements Printable {
     private int id;
+
     private String name;
 
     public Category(int id, String name) {

@@ -3,7 +3,9 @@ package ro.unibuc.helpdesk.model;
 public class Comment implements Printable {
 
     private int id;
+
     private int ticketId;
+
     private String message;
 
     public Comment(int id, int ticketId, String message) {

@@ -1,13 +1,15 @@
 package ro.unibuc.helpdesk.service;
 
+import java.util.List;
+
+import ro.unibuc.helpdesk.exception.EntityNotFoundException;
 import ro.unibuc.helpdesk.model.Agent;
 import ro.unibuc.helpdesk.repository.AgentRepository;
-
-import java.util.List;
 
 public class AgentService {
 
     private final AgentRepository repository;
+
     private final AuditService audit;
 
     public AgentService(AgentRepository repository, AuditService audit) {
@@ -31,5 +33,16 @@ public class AgentService {
     public List<Agent> getAllAgents() {
         audit.log("LIST_AGENTS");
         return repository.findAll();
+    }
+
+    public void deleteAgent(int id) {
+        if (repository.findById(id) == null) {
+            throw new EntityNotFoundException(
+                    String.format("Agent with id %s not found.", id)
+            );
+        }
+
+        repository.delete(id);
+        audit.log("DELETE_AGENT");
     }
 }

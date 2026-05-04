@@ -3,13 +3,19 @@ package ro.unibuc.helpdesk.model;
 public class Ticket implements Printable {
 
     private int id;
+
     private String title;
+
     private String description;
+
     private TicketStatus status;
+
     private Priority priority;
 
     private int customerId;
+
     private Integer agentId;
+
     private int categoryId;
 
     public Ticket(int id, String title, String description,

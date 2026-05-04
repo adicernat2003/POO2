@@ -1,10 +1,5 @@
 package ro.unibuc.helpdesk.repository;
 
-import ro.unibuc.helpdesk.config.DatabaseConnection;
-import ro.unibuc.helpdesk.model.Priority;
-import ro.unibuc.helpdesk.model.Ticket;
-import ro.unibuc.helpdesk.model.TicketStatus;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,6 +7,11 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
+
+import ro.unibuc.helpdesk.config.DatabaseConnection;
+import ro.unibuc.helpdesk.model.Priority;
+import ro.unibuc.helpdesk.model.Ticket;
+import ro.unibuc.helpdesk.model.TicketStatus;
 
 public class TicketRepository {
 
@@ -125,6 +125,41 @@ public class TicketRepository {
 
             stmt.setInt(1, agentId);
             stmt.setInt(2, ticketId);
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean existsByCustomerId(int customerId) {
+        String sql = "SELECT COUNT(*) FROM tickets WHERE customer_id = ?";
+
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setInt(1, customerId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return false;
+    }
+
+    public void delete(int id) {
+        String sql = "DELETE FROM tickets WHERE id = ?";
+
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
             stmt.executeUpdate();
 
         } catch (SQLException e) {
