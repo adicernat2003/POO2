@@ -2,6 +2,7 @@ package model;
 
 public class Coffee implements Product {
     private final String name;
+
     private final double price;
 
     public Coffee(String name, double price) {

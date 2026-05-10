@@ -1,3 +1,5 @@
+import java.util.List;
+
 import adapter.LegacyPaymentAdapter;
 import factory.CoffeeShopFactory;
 import factory.FastCoffeeShopFactory;
@@ -8,8 +10,6 @@ import observer.KitchenDisplay;
 import observer.ManagerDashboard;
 import service.OrderProcessor;
 import service.OrderQueue;
-
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {

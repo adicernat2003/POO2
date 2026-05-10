@@ -1,10 +1,5 @@
 package service;
 
-import adapter.PaymentProcessor;
-import model.Order;
-import model.Product;
-import observer.OrderObserver;
-
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -12,9 +7,16 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import adapter.PaymentProcessor;
+import model.Order;
+import model.Product;
+import observer.OrderObserver;
+
 public class OrderProcessor {
     private final OrderQueue orderQueue;
+
     private final PaymentProcessor paymentProcessor;
+
     private final List<OrderObserver> observers;
 
     /*

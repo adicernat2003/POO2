@@ -16,7 +16,9 @@ public class Order {
     */
 
     private final String customerName;
+
     private final List<Product> products;
+
     private final int priority;
 
     private Order(Builder builder) {
@@ -55,7 +57,9 @@ public class Order {
 
     public static class Builder {
         private final String customerName;
+
         private final List<Product> products = new ArrayList<>();
+
         private int priority = 1;
 
         public Builder(String customerName) {

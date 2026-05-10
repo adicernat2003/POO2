@@ -1,10 +1,10 @@
 package service;
 
-import model.Order;
-
 import java.util.Comparator;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.PriorityBlockingQueue;
+
+import model.Order;
 
 public final class OrderQueue {
 
